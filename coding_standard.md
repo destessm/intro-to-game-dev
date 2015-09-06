@@ -1,5 +1,5 @@
 # Physical Rules 
-	1. ...All files must be written in lower snake case (render_engine.cpp)
+	1. 	⋅⋅⋅All files must be written in lower snake case (render_engine.cpp)
 	2.	Header files and cpp’s must be colocated in the same directory
 	3.	Every header file must have a cpp, even if the cpp only includes the header (for example, with templates)
 	4.	The root of the directory must contain all files needed for building and running the application (for example, appropriate make files)
