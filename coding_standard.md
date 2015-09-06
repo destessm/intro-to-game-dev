@@ -1,12 +1,12 @@
 # Physical Rules 
-1. All files must be written in lower snake case (render_engine.cpp)
-2. Header files and cpp’s must be colocated in the same directory
-3. Every header file must have a cpp, even if the cpp only includes the header (for example, with templates)
-4. The root of the directory must contain all files needed for building and running the application (for example, appropriate make files)
-	5.	CMake must be used for builds
-	6.	Google Test must be used for testing
-	7.	All other files must be well organized within subdirectories
-	8.	Cpp files, not cc files
+	...1.	All files must be written in lower snake case (render_engine.cpp)
+	...2.	Header files and cpp’s must be colocated in the same directory
+	...3.	Every header file must have a cpp, even if the cpp only includes the header (for example, with templates)
+	...4.	The root of the directory must contain all files needed for building and running the application (for example, appropriate make files)
+	...5.	CMake must be used for builds
+	...6.	Google Test must be used for testing
+	...7.	All other files must be well organized within subdirectories
+	...8.	Cpp files, not cc files
 # Code rules
 	1.	Everything must be in well-formed English where appropriate
 	2.	The first line of every file must contain a C++ style comment with the file name (// weapon.h)
