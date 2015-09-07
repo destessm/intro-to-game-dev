@@ -55,3 +55,9 @@
 44. Accessor functions must be named the same as the interior data member they retrieve without the prefixed d_ (if you have float d_time, you would then have a float time() const function for retrieving the value)
 45. Mutators must be prefixed with set (for the same example, you would have a void setTime( float time ))
 46. All namespaces must have a comment on the closing bracket indicating what namespace was closed in the form of // End nspc namespace (where nspc is the namespace being closed)
+47. All GTest test case names must clearly define what part of the code is being tested and must also be named in upper camel case.
+48. All GTest indivudal test names must further define what testing is being done and must also be named in upper camel case.
+49. One full tab is 4 spaces.
+50. Operators must be separated by spaces ( 1 + 2 )
+51. Boolean expressions with three or more interior expressions must separate each interior expression with parentheses. 
+52. If a boolean expression with three or more interior expressions surpasses the 80 character line limit, it should be separated after a && or || operator.
