@@ -1,12 +1,19 @@
 cmake_minimum_required(VERSION 3.3)
 project( main )
 
+# Set up Google Test
 enable_testing()
 find_package( Threads )
-message( STATUS GTEST_ROOT=$ENV{GTEST_ROOT} )
 include_directories( $ENV{GTEST_ROOT}/include )
 link_directories( $ENV{GTEST_ROOT}/build )
+
+# Add Executables
 add_executable( main game.m.cpp )
-target_link_libraries( main gtest gtest_main )
-target_link_libraries( main ${CMAKE_THREAD_LIBS_INIT} )
-add_test( NAME main COMMAND main )
+add_executable( runUnitTests unit_tests.cpp )
+
+# Link libraries
+target_link_libraries( runUnitTests gtest gtest_main )
+target_link_libraries( runUnitTests ${CMAKE_THREAD_LIBS_INIT} )
+
+# Add Tests
+add_test( NAME runUnitTests COMMAND runUnitTests )
