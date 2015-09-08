@@ -4,8 +4,10 @@ project( main )
 # Set up Google Test
 enable_testing()
 find_package( Threads )
-include_directories( $ENV{GTEST_ROOT}/include )
-link_directories( $ENV{GTEST_ROOT}/build )
+# include_directories( $ENV{GTEST_ROOT}/include )
+# link_directories( $ENV{GTEST_ROOT}/build )
+include_directories( ${GIT_DIR}/gtest-1.7.0/include )
+link_directories( ${GIT_DIR}/gtest-1.7.0/build )
 
 # Add Executables
 add_executable( main game.m.cpp )
