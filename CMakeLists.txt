@@ -6,8 +6,8 @@ enable_testing()
 find_package( Threads )
 # include_directories( $ENV{GTEST_ROOT}/include )
 # link_directories( $ENV{GTEST_ROOT}/build )
-include_directories( ${GIT_DIR}/gtest-1.7.0/include )
-link_directories( ${GIT_DIR}/gtest-1.7.0/build )
+add_subdirectory( gtest-1.7.0 )
+include_directories( ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} )
 
 # Add Executables
 add_executable( main game.m.cpp )
