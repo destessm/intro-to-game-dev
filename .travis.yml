@@ -1,5 +1,7 @@
-language: cpp
-compiler: gcc
+language: 
+  - cpp
+compiler: 
+  - gcc
 before_script:
   - mkdir build
   - cd build
