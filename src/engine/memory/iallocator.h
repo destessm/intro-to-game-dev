@@ -2,7 +2,6 @@
 
 namespace StevensDev
 {
-
 namespace sgdm
 {
 
@@ -11,8 +10,8 @@ class iAllocator
 {
   public:
     //should it have constructor+copy+destructor?
-    virtual get( int count ) : T* =0;
-    virtual release( T*, int count) : void =0;
+    virtual T* get( int count ) =0;
+    virtual void release( T*, int count) =0;
 }
 
 
