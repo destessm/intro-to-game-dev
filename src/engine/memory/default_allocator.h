@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <assert.h>
-#include "iAllocator.h"
+#include "iallocator.h"
 
 namespace StevensDev
 {
@@ -12,13 +12,13 @@ namespace sgdm
 {
 
 template <class T>
-class DefaultAllocator: public iAllocator
+class DefaultAllocator: public iAllocator<T>
 {
   public:
     // CONSTRUCTORS
     DefaultAllocator();
       // Default constructor
-    DefaultAllocator( DefaultAllocator copy );
+    DefaultAllocator( const DefaultAllocator<T>& );
       // Copy constructor
 
     // DESTRUCTOR
@@ -29,52 +29,59 @@ class DefaultAllocator: public iAllocator
       // Allocates enough memory for count number of Ts
     void release( T* pointer, int count);
       // Releases the memory in ptr, which should be size count.
-}
+};
 
 // FREE OPERATORS
+template<class T>
 inline
-std::ostream& operator<<( std::ostream& stream, const DefaultAllocator& allocator )
+std::ostream& operator<<( std::ostream& stream, const DefaultAllocator<T> )
 {
     return stream << "{ allocator }";
 }
 
 // CONSTRUCTORS
+template<class T>
 inline
-DefaultAllocator::DefaultAllocator()
+DefaultAllocator<T>::DefaultAllocator() 
 {
 
 }
 
+template<class T>
 inline
-DefaultAllocator::DefaultAllocator( DefaultAllocator copy )
+DefaultAllocator<T>::DefaultAllocator( const DefaultAllocator<T>& )
 {
     
 }
 
 // DESTRUCTOR
+template<class T>
 inline
-DefaultAllocator::~DefaultAllocator()
+DefaultAllocator<T>::~DefaultAllocator()
 {
 
 }
 
 // MUTATORS
+template<class T>
 inline
-DefaultAllocator::get( int count )
+T* DefaultAllocator<T>::get( int count )
 {
     return new T[count];
 }
 
+template<class T>
 inline
-DefaultAllocator::release( T* pointer, int count )
+void DefaultAllocator<T>::release( T* pointer, int count )
 {
-    assert( pointer != nullptr );
+    assert( pointer != 0 );
+/*
     for( int i = 0; i < count; i++ )
     {
-        assert( pointer[i] != nullptr );
+        assert( pointer[i] != 0 );
         delete pointer[i];
-    }
-    delete[] pointer;
+    }*/
+    delete pointer;
 }
 
 } // End sgdm namespace

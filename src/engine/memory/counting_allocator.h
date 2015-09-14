@@ -11,7 +11,7 @@ namespace sgdm
 {
 
 template <class T>
-class CountingAllocator: public DefaultAllocator
+class CountingAllocator: public DefaultAllocator<T>
 {
   private:
     int d_allocationCount;
@@ -22,7 +22,7 @@ class CountingAllocator: public DefaultAllocator
     // CONSTRUCTORS
     CountingAllocator();
       // Default constructor
-    CountingAllocator( DefaultAllocator copy );
+    CountingAllocator( const CountingAllocator<T> &copy );
       // Copy constructor
 
     // DESTRUCTOR
@@ -47,91 +47,109 @@ class CountingAllocator: public DefaultAllocator
       // Allocates enough memory for count number of Ts
     void release( T* pointer, int count);
       // Releases the memory in ptr, which should be size count.
-}
+};
+
+// DECLARATIONS OF STATIC VARIABLES
+template<class T>
+int CountingAllocator<T>::d_totalAllocationCount = 0;
+template<class T>
+int CountingAllocator<T>::d_totalReleaseCount = 0;
 
 // FREE OPERATORS
+template<class T>
 inline
-std::ostream& operator<<( std::ostream& stream, const DefaultAllocator& allocator )
+std::ostream& operator<<( std::ostream& stream, const CountingAllocator<T>& )
 {
     return stream << "{ allocator }";
 }
 
 // CONSTRUCTORS
+template<class T>
 inline
-CountingAllocator::CountingAllocator()
+CountingAllocator<T>::CountingAllocator()
 {
     d_allocationCount = 0;
     d_releaseCount = 0;
 }
 
+template<class T>
 inline
-CountingAllocator::CountingAllocator( DefaultAllocator copy )
+CountingAllocator<T>::CountingAllocator( const CountingAllocator<T> &copy )
 {
     d_allocationCount = copy.getAllocationCount();
     d_releaseCount = copy.getReleaseCount();
 }
 
 // DESTRUCTOR
+template<class T>
 inline
-CountingAllocator::~CountingAllocator()
+CountingAllocator<T>::~CountingAllocator()
 {
 }
 
 // ACCESSORS
+template<class T>
 inline
-CountingAllocator::getAllocationCount()
+int const CountingAllocator<T>::getAllocationCount()
 {
     return d_allocationCount;
 }
 
+template<class T>
 inline
-CountingAllocator::getReleaseCount()
+int const CountingAllocator<T>::getReleaseCount()
 {
     return d_releaseCount;
 }
 
+template<class T>
 inline
-CountingAllocator::getOutstandingCount()
+int const CountingAllocator<T>::getOutstandingCount()
 {
     return d_allocationCount - d_releaseCount;
 }
 
+template<class T>
 inline
-CountingAllocator::getTotalAllocationCount()
+int CountingAllocator<T>::getTotalAllocationCount()
 {
     return d_totalAllocationCount;
 }
 
+template<class T>
 inline
-CountingAllocator::getTotalReleaseCount()
+int CountingAllocator<T>::getTotalReleaseCount()
 {
     return d_totalReleaseCount;
 }
 
+template<class T>
 inline
-CountingAllocator::getTotalOutstandingCount()
+int CountingAllocator<T>::getTotalOutstandingCount()
 {
     return d_totalAllocationCount - d_totalReleaseCount;
 }
 
 // MUTATORS
+template<class T>
 inline
-CountingAllocator::get( int count )
+T* CountingAllocator<T>::get( int count )
 {
     d_allocationCount += count;
     d_totalAllocationCount += count;
-    return DefaultAllocator::get( count );
+    return DefaultAllocator<T>::get( count );
 }
 
+template<class T>
 inline
-CountingAllocator::release( T* pointer, int count )
+void CountingAllocator<T>::release( T* pointer, int count )
 {
     assert( d_allocationCount - d_releaseCount != 0 );
     d_releaseCount += count;
     d_totalReleaseCount += count;
-    DefaultAllocator::release( pointer, count )
+    DefaultAllocator<T>::release( pointer, count );
     
-}
+};
 
 } // End sgdm namespace
 } // End StevensDev namespace

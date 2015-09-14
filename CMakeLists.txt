@@ -9,11 +9,13 @@ include_directories( ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} )
 
 # Add Executables
 add_executable( main game.m.cpp )
-add_executable( runUnitTests src/unit_tests.cpp )
+add_executable( runTests tests/main_tests.cpp )
+include_directories( src/engine/containers )
+include_directories( src/engine/memory )
 
 # Link libraries
-target_link_libraries( runUnitTests gtest gtest_main )
-target_link_libraries( runUnitTests ${CMAKE_THREAD_LIBS_INIT} )
+target_link_libraries( runTests gtest gtest_main )
+target_link_libraries( runTests ${CMAKE_THREAD_LIBS_INIT} )
 
 # Add Tests
-add_test( NAME runUnitTests COMMAND runUnitTests )
+add_test( NAME runTests COMMAND runTests )
