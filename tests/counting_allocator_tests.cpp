@@ -9,42 +9,41 @@ class CountingAllocatorTest : public testing::Test
     StevensDev::sgdm::CountingAllocator<int> myAlloc;
     StevensDev::sgdm::CountingAllocator<int> myAlloc1;
     StevensDev::sgdm::CountingAllocator<int> myAlloc2;
+    StevensDev::sgdm::CountingAllocator<int> myAlloc3;
 
     virtual void SetUp()
     {
         int *myAllocated1 = myAlloc1.get( 5 );
 
         int *myAllocated2 = myAlloc2.get( 5 );
-        myAlloc1.release( myAllocated1, 5 );
+        myAlloc2.release( myAllocated2, 5 );
+
+        int *myAllocated3 = myAlloc3.get( 20 );
     }
 
     virtual void TearDown()
     {
     }
-}
+};
 
-TEST( CountingAllocatorTest, OutstandingCountZeroStart )
+TEST_F( CountingAllocatorTest, OutstandingCountZeroStart )
 {
     EXPECT_EQ( 0, myAlloc.getOutstandingCount() );
-}
+} // passed
 
-TEST( CountingAllocatorTest, OutstandingCountFive )
+TEST_F( CountingAllocatorTest, OutstandingCountFive )
 {
     EXPECT_EQ( 5, myAlloc1.getOutstandingCount() );
-}
+} // passed
 
-Test( CountingAllocatorTest, OutstandingCountZeroEnd )
+TEST_F( CountingAllocatorTest, OutstandingCountZeroEnd )
 {
     EXPECT_EQ( 0, myAlloc2.getOutstandingCount() );
-}
+} // passed
 
-TEST( CountingAllocatorTest, StaticCounts )
+TEST_F( CountingAllocatorTest, StaticCounts )
 {
-    StevensDev::sgdm::CountingAllocator <int> myAlloc0;
-    int *myAllocated0 = myAlloc0.get( 2 );
-
-    StevensDev::sgdm::CountingAllocator <int> myAlloc1;
-    int *myAllocated1 = myAlloc1.get( 5 );
-
-    EXPECT_EQ( 7, myAlloc0.getTotalOutstandingCount() );
-}
+    EXPECT_EQ( 100, myAlloc.getTotalOutstandingCount() );
+      // expecting 100 because it runs the set up for each of the four tests, 
+      // and the static count remains between them. Each time it counts 25.
+} 

@@ -1,6 +1,8 @@
 // main_tests.cpp
 #include <iostream>
 #include <gtest/gtest.h>
+#include "counting_allocator_tests.cpp"
+#include "dynamic_array_tests.cpp"
 
 int main(int argc, char **argv)
 {

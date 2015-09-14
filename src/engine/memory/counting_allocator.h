@@ -99,6 +99,7 @@ template<class T>
 inline
 int const CountingAllocator<T>::getReleaseCount()
 {
+    //std::cout << "IN GET RELEASE COUNT: " << d_releaseCount << std::endl;
     return d_releaseCount;
 }
 

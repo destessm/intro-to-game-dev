@@ -19,6 +19,11 @@ class DynamicArray
     sgdm::iAllocator<T> *d_alloc;
     int d_endIndex; // actual index of last valid element
     int d_capacity;
+
+    
+    void reallocate();
+      // reallocates memory, adding 5 to capacity
+    
   public:
     // CONSTRUCTORS
     DynamicArray();
@@ -59,8 +64,7 @@ template <class T>
 inline
 DynamicArray<T>::DynamicArray()
 {
-    // d_alloc = new sgdm::CountingAllocator<T>::CountingAllocator<T>();
-    d_array = d_alloc.get(5); // base capacity of 5
+    d_array = d_alloc->get(5); // base capacity of 5
     d_endIndex = -1;
     d_capacity = 5;
 }
@@ -80,8 +84,9 @@ inline
 DynamicArray<T>::DynamicArray( sgdm::iAllocator<T>* alloc )
 {
     d_alloc = alloc;
-    d_array = d_alloc.get(5); // base capacity of 5
-    //unfinished?
+    d_array = d_alloc->get(5); // base capacity of 5
+    d_endIndex = -1;
+    d_capacity = 5;
 }
 
 // DESTRUCTOR
@@ -100,9 +105,7 @@ void DynamicArray<T>::push( const T& element )
     // check if at capacity
     if( d_endIndex == d_capacity - 1 )
     {
-        // reallocate, add 5 to capacity
-        T* newArray = d_alloc.get( d_capacity + 5 );
-        // unfinished
+        reallocate();
     }
     d_array[ d_endIndex ] = element;
     d_endIndex++;
@@ -115,7 +118,7 @@ void DynamicArray<T>::pushFront( T element )
     // check if at capacity
     if( d_endIndex == d_capacity - 1 )
     {
-        // reallocate, add 5 to capacity
+        reallocate();
     }
     
     // shift
@@ -132,7 +135,7 @@ template <class T>
 inline
 T DynamicArray<T>::pop()
 {
-    T element = d_array[ d_endIndex ];
+    T element = d_array[ d_endIndex - 1 ];
     d_array[ d_endIndex ] = 0;
     d_endIndex--;
     return element;
@@ -213,7 +216,7 @@ void DynamicArray<T>::insertAt( T element, unsigned int index )
 {
     if( d_endIndex == d_capacity - 1 )
     {
-        // reallocate, add 5 to capacity
+        reallocate();
     }
 
     for( int i = index; i < d_endIndex; i++ )
@@ -222,6 +225,20 @@ void DynamicArray<T>::insertAt( T element, unsigned int index )
     }
     
     d_array[ index ] = element;
+}
+
+template <class T>
+inline
+void DynamicArray<T>::reallocate()
+{
+    T* newArray = d_alloc->get( d_capacity + 5 ); // allocate new memory
+    for( int i = 0; i < d_capacity; i++ ) // copy values to new array
+    {
+        newArray[ i ] = d_array[ i ];
+    }
+    d_alloc->release(d_array, d_capacity); // release old memory
+    d_array = newArray; // point d_alloc to the new array memory
+    d_capacity += 5; // add five to capacity
 }
 
 } // End sgdc namespace
