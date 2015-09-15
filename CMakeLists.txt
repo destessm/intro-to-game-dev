@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project( main )
 
-# Set up support for c++11
-SET(CMAKE_CXX_FLAGS "-std=c++11")
-
 # Set up Google Test
 enable_testing()
 find_package( Threads )

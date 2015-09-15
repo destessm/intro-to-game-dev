@@ -1,5 +1,6 @@
 // counting_allocator_tests.cpp
 #include <iostream>
+#include <sstream>
 #include <gtest/gtest.h>
 #include "counting_allocator.h"
 
@@ -74,6 +75,7 @@ TEST_F( CountingAllocatorTest, TotalOutstandingCount )
       // expecting 25 because it hasn't called TearDown for this pass
       // 5 + 5 - 5 + 20 = 25
 } 
+
 
 TEST_F( CountingAllocatorTest, OstreamAndAssignmentOperatorTest )
 {

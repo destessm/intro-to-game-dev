@@ -37,10 +37,12 @@ class DynamicArray
     ~DynamicArray();
 
     // OPERATORS
-    T operator[]( int index );
+    T operator[]( const int index );
       // sets an element, undefined behavior if out of bounds
-    const T operator[]( int index ) const;
+      // Subscript Operator crashes. Still unsure of why this is.
+    const T operator[]( const int index ) const;
       // retrieves an element, undefined behavior if out of bounds
+      // Subscript Operator crashes. Still unsure of why this is.
     DynamicArray<T>& operator= ( const DynamicArray<T>& other );
       // assignment operator    
     
@@ -98,6 +100,21 @@ DynamicArray<T>& DynamicArray<T>::operator= (const DynamicArray<T>& other)
     else 
         return *this;
 }
+
+template <class T>
+inline
+T DynamicArray<T>::operator[]( const int index )
+{
+    return d_array[ index ];
+}
+
+template <class T>
+inline
+T const DynamicArray<T>::operator[]( const int index ) const
+{
+    return d_array[ index ];
+}
+
 
 // CONSTRUCTORS
 template <class T>
@@ -220,21 +237,6 @@ T const DynamicArray<T>::at( unsigned int index ) const
         return d_array[ index ];
     }
 }
-
-template <class T>
-inline
-T DynamicArray<T>::operator[]( int index )
-{
-    return d_array[ index ];
-}
-
-template <class T>
-inline
-T const DynamicArray<T>::operator[]( int index ) const
-{
-    return d_array[ index ];
-}
-
 
 template <class T>
 inline

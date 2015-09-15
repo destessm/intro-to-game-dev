@@ -7,6 +7,9 @@ class DynamicArrayTest : public testing::Test
 {
   public:
 
+    // This is the code the crashes Travis CI. It works fine with gcc-4.8
+    // (-std=c++11), but Travis CI doesn't have support for 4.8 currently.
+    // The code works fine on Ubuntu running gcc-4.8.
     StevensDev::sgdc::DynamicArray<int>* myArray = new 
         StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
@@ -43,7 +46,8 @@ class DynamicArrayTest : public testing::Test
         myArray1->push( 8 );
         myArray1->push( 3 );
 
-        //myArray2=myArray;
+        //myArray2=myArray; 
+        // this functionality mostly works, but has memory leaks
 
         for( int i = 0; i < 12; i++ )
         {
@@ -64,10 +68,6 @@ class DynamicArrayTest : public testing::Test
         delete myArray2;
         delete myArray3;
         delete myArray4;
-
-        /*std::cout << "teardown: outstanding: " 
-            << StevensDev::sgdm::CountingAllocator<int>::getTotalOutstandingCount()
-            << "\n";*/
     }
 };
 
@@ -129,11 +129,12 @@ TEST_F( DynamicArrayTest, AllocatorConstructor )
     EXPECT_EQ( 0, myAlloc.getOutstandingCount() );
 }
 
-/*
-TEST_F( DynamicArrayTest, ArrayAssignmentOperator )
-{
+
+//TEST_F( DynamicArrayTest, ArraySubscriptOperator )
+//{
     //EXPECT_EQ( 10, myArray[0] );
-}*/
+      // Subscript Operator crashes. Still unsure of why this is.
+//}
 
 TEST_F( DynamicArrayTest, MemoryLeakTest )
 {
