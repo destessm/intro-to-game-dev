@@ -46,9 +46,6 @@ class DynamicArrayTest : public testing::Test
         myArray1->push( 8 );
         myArray1->push( 3 );
 
-        //myArray2=myArray; 
-        // this functionality mostly works, but has memory leaks
-
         for( int i = 0; i < 12; i++ )
         {
             myArray2->pushFront( i );
@@ -58,6 +55,9 @@ class DynamicArrayTest : public testing::Test
         {
             myArray3->push( 2 );
         }
+
+        //myArray4=myArray; 
+        // this functionality mostly works, but has memory leaks
     }
 
     virtual void TearDown()
@@ -93,7 +93,8 @@ TEST_F( DynamicArrayTest, AssignmentOperator )
 {
     EXPECT_EQ( 2, myArray4->getLength() );
     EXPECT_EQ( 80, myArray4->at( 0 ) );
-}
+    // these would pass if "myArray4=myArray;" was uncommented
+} // FAIL because memory leaks are more imporant
 
 TEST_F( DynamicArrayTest, PushFront )
 {

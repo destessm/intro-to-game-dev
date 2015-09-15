@@ -81,4 +81,4 @@ TEST_F( CountingAllocatorTest, OstreamAndAssignmentOperatorTest )
 {
     std::cout << myAlloc4 << "\n";
     EXPECT_EQ( 20, myAlloc4.getAllocationCount() );
-}
+} // FAILS because Assignment Operator doesn't work properly with CountingAllocator

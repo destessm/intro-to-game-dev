@@ -23,6 +23,14 @@ class DynamicArray
     
     void reallocate();
       // reallocates memory, adding 5 to capacity
+      // My Dynamic Array begins with capacity 5, and every time it reaches its
+      // current capacity and needs to grow, it adds 5 to that capacity. 
+      // In reallocate, I allocate new memory with the new added capacity and 
+      // copy the original array data to the newly allocated memory. I then  
+      // release the old memory and point d_array to the new memory. The final
+      // step is to store what the new capacity is within d_capacity. 
+      // This process successfully copies the old data and creates room for new
+      // data. It also avoids the pitfall of memory leakage.
     
   public:
     // CONSTRUCTORS
