@@ -1,7 +1,7 @@
 language: 
   - cpp
 compiler: 
-  - gcc
+  - gcc -std=c++11
 before_script:
   - mkdir build
   - cd build
