@@ -35,7 +35,16 @@ class DynamicArray
 
     // DESTRUCTOR
     ~DynamicArray();
+
+    // OPERATORS
+    T operator[]( int index );
+      // sets an element, undefined behavior if out of bounds
+    const T operator[]( int index ) const;
+      // retrieves an element, undefined behavior if out of bounds
+    DynamicArray<T>& operator= ( const DynamicArray<T>& other );
+      // assignment operator    
     
+    // MUTATORS
     void push( const T& element );
       // adds element to end of collection, grow
     void pushFront( T element );
@@ -44,20 +53,51 @@ class DynamicArray
       // removes and retrieves the last ele ment, shifts
     T popFront();
       // removes and retrieves the first element, shifts
-    unsigned int const getLength();
+    unsigned int const getLength() const;
       // number of elements contained
-    T const at( unsigned int index );
+    T const at( unsigned int index ) const;
       // retrieves an element at a location, throws if out of bounds
-    T operator[](int);
-      // sets an element, undefined behavior if out of bounds
-    const T operator[](int) const;
-      // retrieves an element, undefined behavior if out of bounds
     T removeAt( unsigned int index );
       // removes, throws if invalid, shifts
     void insertAt( T element, unsigned int index );
       // can grow, shifts
 };
 
+// FREE OPERATORS
+template<class T>
+inline
+std::ostream& operator<<( std::ostream& stream, const DynamicArray<T>& array)
+{
+    stream << "\"DynamicArray\":[";
+    for( int i = 0; i < array.getLength(); i++ )
+    {
+        stream << "\n\t{\"DynamicArray[" << i << "]\":\"" << array.at( i ) << "\"}";
+        if( i != array.getLength() - 1 )
+        {
+            stream << ",";
+        }
+    }
+    stream << "\n]";
+    return stream;
+}
+
+// OPERATORS
+template<class T>
+inline
+DynamicArray<T>& DynamicArray<T>::operator= (const DynamicArray<T>& other)
+{
+    if( this != &other )
+    {
+        if( this.d_array[ 0 ] != NULL )
+        {
+            //this.d_alloc->release( this.d_array, this.d_capacity );
+        }
+        DynamicArray<T> newArray ( other );
+        return newArray;
+    }
+    else 
+        return *this;
+}
 
 // CONSTRUCTORS
 template <class T>
@@ -73,6 +113,10 @@ template <class T>
 inline
 DynamicArray<T>::DynamicArray( const DynamicArray<T> &copy )
 {
+    if( d_array != 0 )
+    {
+        //delete d_array;
+    }
     d_array = copy.d_array; // not sure if right
     d_alloc = copy.d_alloc;
     d_endIndex = copy.d_endIndex;
@@ -94,8 +138,8 @@ template <class T>
 inline
 DynamicArray<T>::~DynamicArray()
 {
-    delete[] d_array;
-    delete[] d_alloc;
+    d_alloc->release( d_array, d_capacity );
+
 }
 
 template <class T>
@@ -107,7 +151,7 @@ void DynamicArray<T>::push( const T& element )
     {
         reallocate();
     }
-    d_array[ d_endIndex ] = element;
+    d_array[ d_endIndex + 1 ] = element;
     d_endIndex++;
 }
 
@@ -128,6 +172,7 @@ void DynamicArray<T>::pushFront( T element )
     }
     
     // change first index to element
+    d_endIndex++;
     d_array[0] = element;
 }
 
@@ -135,7 +180,7 @@ template <class T>
 inline
 T DynamicArray<T>::pop()
 {
-    T element = d_array[ d_endIndex - 1 ];
+    T element = d_array[ d_endIndex ];
     d_array[ d_endIndex ] = 0;
     d_endIndex--;
     return element;
@@ -146,7 +191,7 @@ inline
 T DynamicArray<T>::popFront()
 {
     T element = d_array[ 0 ];
-    for( int i = 1; i < d_endIndex; i++ )
+    for( int i = 1; i <= d_endIndex; i++ )
     {
         d_array[ i - 1 ] = d_array[ i ];
     }
@@ -157,14 +202,14 @@ T DynamicArray<T>::popFront()
 
 template <class T>
 inline
-unsigned int const DynamicArray<T>::getLength()
+unsigned int const DynamicArray<T>::getLength() const
 {
     return ( d_endIndex + 1 );
 }
 
 template <class T>
 inline
-T const DynamicArray<T>::at( unsigned int index )
+T const DynamicArray<T>::at( unsigned int index ) const
 {
     if( index > d_endIndex )
     {

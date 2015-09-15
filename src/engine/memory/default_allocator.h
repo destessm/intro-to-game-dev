@@ -36,7 +36,7 @@ template<class T>
 inline
 std::ostream& operator<<( std::ostream& stream, const DefaultAllocator<T> )
 {
-    return stream << "{ allocator }";
+    return stream << "{\"default allocator\"}";
 }
 
 // CONSTRUCTORS
