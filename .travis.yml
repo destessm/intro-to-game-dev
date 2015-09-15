@@ -1,7 +1,10 @@
 language: 
   - cpp
 compiler: 
-  - gcc -std=c++11
+  - gcc
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq gcc-4.8
 before_script:
   - mkdir build
   - cd build

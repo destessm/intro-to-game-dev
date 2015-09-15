@@ -6,24 +6,25 @@
 class DynamicArrayTest : public testing::Test
 {
   public:
+
     StevensDev::sgdc::DynamicArray<int>* myArray = new 
-        StevensDev::sgdc::DynamicArray<int>(new 
+        StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
 
     StevensDev::sgdc::DynamicArray<int>* myArray1 = new 
-        StevensDev::sgdc::DynamicArray<int>(new 
+        StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
 
     StevensDev::sgdc::DynamicArray<int>* myArray2 = new 
-        StevensDev::sgdc::DynamicArray<int>(new 
+        StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
 
     StevensDev::sgdc::DynamicArray<int>* myArray3 = new 
-        StevensDev::sgdc::DynamicArray<int>(new 
+        StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
 
     StevensDev::sgdc::DynamicArray<int>* myArray4 = new 
-        StevensDev::sgdc::DynamicArray<int>(new 
+        StevensDev::sgdc::DynamicArray<int>( new 
             StevensDev::sgdm::CountingAllocator<int> );
 
 

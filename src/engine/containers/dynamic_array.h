@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <stdexcept>
-#include "counting_allocator.h"
+#include "iallocator.h"
 
 namespace StevensDev
 {
